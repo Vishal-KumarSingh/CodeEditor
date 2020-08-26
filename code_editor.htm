@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code editor</title>
+    <style>
+
+@media screen and (max-width: 768px){
+    #nomobile {
+        display: block;
+        margin: 0 auto;
+        font-size: 30px;
+    }
+    #body {
+        display: none;
+    }
+}
+@media screen and (min-width: 769px){
+    * {
+        box-sizing: border-box;
+    }
+    #nomobile {
+        display: none;
+    }
+    #editor {
+        width: 100%;
+        height: 90%;}
+#file_name {
+width: 600px;
+height: 50px;
+border: none;
+border-bottom: 3px solid blue;
+
+
+}
+#editor {
+    box-shadow: 0px 0px 5px 5px grey;
+    margin: 20px 0;
+}
+#inputfile {
+    background:lightskyblue;
+    border: 3px solid orange;
+}
+#save {
+    background: blue;
+    color: white;
+    position: absolute;
+    right: 30px;
+    top: 20px;
+}
+}
+    </style>
+</head>
+<div id="nomobile">
+    Sorry this Code editor is not made to run on mobile devices or smaller screen. 
+  </div>
+<body>
+  <div id="body">
+<div id="header">
+
+<input type="text" placeholder="Enter name of your file" id="file_name">
+<input type="file" id="inputfile" value="Open your files here">
+<input type="button" value="Save" id="save" onclick="save_my_file()">
+
+</div>
+
+<div id="code_editor">
+<textarea name="code" id="editor" cols="30" rows="30"></textarea>
+</div>
+</div>
+
+<footer>
+    All right are reserved any type of queries and suggestions are invited. Please mail us on vishalkrsinghmsk@gmail.com
+</footer>
+</body>
+<script type="text/javascript"> 
+
+    document.getElementById('inputfile') 
+        .addEventListener('change', function() { 
+          
+        var fr=new FileReader(); 
+        fr.onload=function(){ 
+            document.getElementById('editor') 
+                    .textContent=fr.result; 
+        } 
+          
+        fr.readAsText(this.files[0]); 
+    }) 
+
+
+function save_my_file() {
+ 
+    var textToSave = document.getElementById("editor").value;
+    var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+    var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+    var fileNameToSaveAs = document.getElementById("file_name").value;
+ 
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    downloadLink.href = textToSaveAsURL;
+    downloadLink.onclick = destroyClickedElement;
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+ 
+    downloadLink.click();
+
+}
+function destroyClickedElement(event)
+{
+    document.body.removeChild(event.target);
+}
+</script> 
+</html>
